@@ -19,17 +19,6 @@ public class AcquaintanceSteps implements En {
             acquaintancePage.tapOnAddAcquaintanceButton();
         });
 
-        Given("^I tap on the new acquaintance$", () -> {
-            AcquaintancePage addAcquaintancePage = new AcquaintancePage(TestBase.getInstance().getDriver());
-            String formattedAcquaintanceName = String.format("%s, %s", scenarioState.getLastName(), scenarioState.getFirstName());
-
-            Helper.scrollDownFullScreenUntilCondition(ExpectedConditionWrapper.condition(webElement ->
-                    addAcquaintancePage.isAcquaintanceWithNameDisplayed(formattedAcquaintanceName)));
-            int indexOfAddedAcquaintance = addAcquaintancePage.getAcquaintancesNames().indexOf(formattedAcquaintanceName);
-
-            addAcquaintancePage.tapOnAcquaintanceAtIndex(indexOfAddedAcquaintance);
-        });
-
         Then("^I should see the new acquaintance in the list$", () -> {
             AcquaintancePage addAcquaintancePage = new AcquaintancePage(TestBase.getInstance().getDriver());
             String formattedAcquaintanceName = String.format("%s, %s", scenarioState.getLastName(), scenarioState.getFirstName());
@@ -37,14 +26,6 @@ public class AcquaintanceSteps implements En {
             addAcquaintancePage.waitUntilListIsNotEmpty();
             Helper.scrollDownFullScreenUntilCondition(ExpectedConditionWrapper.condition(webElement ->
                     addAcquaintancePage.getAcquaintancesNames().contains(formattedAcquaintanceName)));
-        });
-
-        Then("^I should see that the acquaintance was deleted$", () -> {
-            AcquaintancePage addAcquaintancePage = new AcquaintancePage(TestBase.getInstance().getDriver());
-            String formattedAcquaintanceName = String.format("%s, %s", scenarioState.getLastName(), scenarioState.getFirstName());
-
-            addAcquaintancePage.waitUntilListIsNotEmpty();
-            assertFalse("Acquaintance was not deleted", addAcquaintancePage.getAcquaintancesNames().contains(formattedAcquaintanceName));
         });
     }
 }
